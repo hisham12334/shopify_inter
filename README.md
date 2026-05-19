@@ -1,108 +1,113 @@
 # xinzuo.com.au Shopify clone — TYICDI hiring task
 
-A sanitized clone of the [xinzuo.com.au](https://xinzuo.com.au) Shopify store, shared for the **TYICDI developer hiring task**.
+A sanitized clone of the [xinzuo.com.au](https://xinzuo.com.au) Shopify store, packaged so you can stand up a full visual mirror on your own free Shopify dev store in **about 4 minutes**.
 
-**You get:**
-- The Liquid theme (sections, snippets, blocks, assets, templates, layout, config, locales) — same code running on xinzuo.com.au today.
-- `seed.json` — 237 products, 68 collections, 17 pages, 77 published articles + product imagery URLs. Sanitized: no customer data, no order data, no cost / margin / supplier info, no internal metafields, no tokens.
-- `scripts/seed-to-dev-store.mjs` — an importer that populates **your own** free Shopify Partners dev store with this catalog.
-
-You can stand up a full visual clone of xinzuo's store on your own dev store in about 15 minutes, then pick any page (PDP, collection, cart, homepage, blog, footer — your call) to improve.
+You get the real Liquid theme + 40 sample products (covering all major collections) + 68 collections + 17 pages + 5 published articles, all imported via one command.
 
 ---
 
-## Setup — about 15 minutes
+## Quick start — ~4 minutes from `git clone` to live dev store
 
-### 1. Sign up for Shopify Partners (free)
+### 1. Sign up for Shopify Partners (free, instant)
 
 <https://www.shopify.com/partners/signup>
 
 ### 2. Create a development store
 
-In your Partner dashboard → **Stores** → **Add store** → **Development store**. Pick any name. This store is free, won't be visible to customers, and isn't billed.
+Partner dashboard → **Stores** → **Add store** → **Development store**. Pick any name. Won't be visible to customers, never billed.
 
-### 3. Create an Admin API access token for your dev store
+### 3. Generate an Admin API token in your dev store
 
 In your dev store admin:
 
 1. **Settings → Apps and sales channels → Develop apps**
-2. **Create an app** → give it any name (e.g. "xinzuo-seed")
-3. **Configure Admin API scopes** → enable these:
+2. **Allow custom app development** (if prompted)
+3. **Create an app** → name it anything (e.g. `xinzuo-seed`)
+4. **Configure Admin API scopes** → tick **all of**:
    - `read_products`, `write_products`
    - `read_themes`, `write_themes`
-   - `read_content`, `write_content` (covers pages + articles + blogs)
-4. **Install app** in the top right
-5. Copy the **Admin API access token** (starts with `shpat_…`). You only see this once — save it.
+   - `read_content`, `write_content`
+5. **Save → Install app**
+6. Copy the **Admin API access token** (starts with `shpat_…`) — you only see it once.
 
-### 4. Configure `.env` in this repo
+### 4. Clone this repo
 
-Clone this repo and create a `.env` file in its root:
+```bash
+git clone https://github.com/dintyo/xinzuo-theme-snapshot.git
+cd xinzuo-theme-snapshot
+```
+
+### 5. Create `.env` in the repo root
 
 ```bash
 SHOPIFY_STORE_URL=your-dev-store.myshopify.com
 SHOPIFY_ACCESS_TOKEN=shpat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-> ⚠️ This file is `.gitignored`. **Never commit your token.** Your token only ever lives on your machine.
+> The `.env` is gitignored — never commit your token.
 
-### 5. Dry-run the seed
-
-```bash
-node scripts/seed-to-dev-store.mjs
-```
-
-Prints what it *would* create without actually writing. Confirms your token + store URL are correct.
-
-> The script **refuses** any URL containing `xinzuo` or any URL not ending in `.myshopify.com`. You cannot accidentally seed our production store.
-
-### 6. Run for real
+### 6. Run setup (one command, ~4 min)
 
 ```bash
-node scripts/seed-to-dev-store.mjs --write
+node scripts/setup.mjs --write
 ```
 
-Takes ~10 minutes for the full catalog. To do a quick smaller test first:
+Measured timing on a fresh dev store:
+- Seed data (40 products, 68 collections, 17 pages, 5 articles): **~80s**
+- Theme push (584 files): **~140s**
+- **Total: ~3.5–5 min**
 
-```bash
-node scripts/seed-to-dev-store.mjs --write --limit-products=20
-```
+### 7. Visit your dev store
 
-### 7. Push the theme to your dev store
-
-```bash
-npm i -g @shopify/cli @shopify/theme
-shopify theme push --store=your-dev-store.myshopify.com --live
-```
-
-When prompted, log in via the Shopify CLI's browser flow. The theme uploads in a couple of minutes.
-
-### 8. Visit your dev store
-
-Your Partner dashboard → your store → **Online Store**. You should see a near-pixel-clone of xinzuo.com.au running on your own infrastructure with real-shaped data.
+Partner dashboard → click your store → **Online Store**. You're now looking at a working clone of xinzuo.com.au running on your own infrastructure.
 
 ---
 
 ## The hiring task
 
-Pick **one** thing on your dev store (which mirrors xinzuo.com.au) that you'd fix if you owned it. Anywhere — homepage, PDP, collection, cart, checkout-adjacent, mobile UX, perf, SEO, copy, accessibility, an outright bug. Performance issues, navigation issues, conversion-rate opportunities — anything you spot.
+**Pick the ONE thing** on this store that you'd fix if you owned it. Anywhere — homepage, PDP, collection page, cart, mobile UX, navigation, blog, footer. Performance, SEO, conversion, accessibility, bug, copy, trust — your call.
 
-This is an **engineering** task, not a redesign. We're hiring a developer to work in Liquid alongside our lead dev Rachid. We want the eye for the thing a real Shopify dev would catch.
+**This is an engineering task, not a redesign.** We want the eye for what a real Shopify dev would catch.
 
-**Submit** in your own public GitHub repo (≥3 commits inside your 2-hour window):
+Submit in your own public GitHub repo with **≥3 commits inside your 2-hour window**:
 
-1. Your fix — edited Liquid / CSS / JS / JSON files in their original paths
+1. Your fix (edited Liquid/CSS/JS in original paths)
 2. `before.png` — screenshot of the issue
-3. `after.png` — screenshot of your fix in action
-4. `NOTE.md` (≤300 words):
+3. `after.png` — screenshot of your fix
+4. `NOTE.md`:
    ```markdown
    ## What I picked
    ## Why it's #1
    ## What I did
    ## What I'd do next
    ```
-5. Loom URL — max 3 min, face + screen, in your repo's README
+5. Loom URL (max 3 min, face + screen) in your repo's `README.md`
 
-Then submit your repo URL + Loom + NOTE on the [hiring portal](https://apply.toldyouicoulddoit.com).
+Submit your repo + Loom + NOTE on the [hiring portal](https://apply.toldyouicoulddoit.com).
+
+---
+
+## Setup script options
+
+```bash
+# Default — slim seed (40 products), takes ~4 min
+node scripts/setup.mjs --write
+
+# Full catalog — 237 products + 77 articles, takes ~10 min
+node scripts/setup.mjs --write --full
+
+# Wipe existing data and re-seed (e.g. if you want a clean slate)
+node scripts/setup.mjs --write --wipe
+
+# Dry-run preview (no changes, prints what would happen)
+node scripts/setup.mjs
+```
+
+Individual steps if you want fine control:
+```bash
+node scripts/seed-to-dev-store.mjs --write    # data only
+node scripts/push-theme.mjs --write           # theme only
+```
 
 ---
 
@@ -114,10 +119,10 @@ Then submit your repo URL + Loom + NOTE on the [hiring portal](https://apply.tol
 - Refunds, discount codes, webhooks, apps — never queried
 - Variant `cost`, `inventory_quantity`, internal metafields — explicitly stripped by the export allowlist
 - Internal tags (anything containing "supplier", "wholesale", "margin") — filtered
-- Admin scripts, backup folders, audit results from our working theme repo — not copied
+- References to xinzuo's Shopify-hosted video/image files that wouldn't exist in your dev store — automatically scrubbed at upload (replaced with empty values)
 
-In short: only what an applicant could observe by browsing xinzuo.com.au with their dev tools open.
+In short: only what you'd see by browsing xinzuo.com.au with DevTools open.
 
 ## License
 
-Code shared **solely for the TYICDI developer hiring task**. Brand, product names, and content are © Xinzuo Australia / Told You I Could Do It. Do not redistribute, fork for commercial use, or use as the basis for any other project.
+Shared **solely for the TYICDI developer hiring task**. Brand, product names, content © Xinzuo Australia / Told You I Could Do It. Do not redistribute or fork for commercial use.
