@@ -413,7 +413,7 @@
   <button
     class="button header-actions__action button-unstyled"
     on:click="/open"
-    aria-label="{{ 'accessibility.open_cart_drawer' | t }} {{ 'accessibility.cart_count' | t}}: {{ cart.item_count }}"
+    aria-label="Open cart, {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}"
   >
     {% render 'cart-icon-component' %}
   </button>

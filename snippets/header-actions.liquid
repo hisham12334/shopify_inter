@@ -18,7 +18,7 @@
     <a
       href="{{ routes.cart_url }}"
       class="header-actions__action action__cart"
-      aria-label="{{ 'accessibility.cart' | t }} {{ 'accessibility.cart_count' | t }}: {{ cart.item_count }}"
+      aria-label="Open cart, {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}"
     >
       {% render 'cart-icon-component' %}
     </a>

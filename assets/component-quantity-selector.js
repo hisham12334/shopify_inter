@@ -33,6 +33,9 @@ class QuantitySelectorComponent extends Component {
 
     event.preventDefault();
     this.refs.quantityInput.stepDown();
+    if (parseInt(this.refs.quantityInput.value) === 0) {
+      event.target.disabled = true;
+    }
     this.#onQuantityChange();
     // Note: Swiper is initialized once on DOMContentLoaded in main-cart.liquid
     // No need to reinitialize on every quantity change

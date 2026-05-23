@@ -51,6 +51,9 @@ class CartItemsComponent extends Component {
 
     if (!line) return;
 
+    const lineItemRow = this.refs.cartItemRows?.[line - 1];
+    if (!lineItemRow) return;
+
     if (quantity === 0) {
       return this.onLineItemRemove(line);
     }
@@ -60,9 +63,6 @@ class CartItemsComponent extends Component {
       quantity,
       action: 'change',
     });
-    const lineItemRow = this.refs.cartItemRows[line - 1];
-
-    if (!lineItemRow) return;
 
     const textComponent = /** @type {TextComponent | undefined} */ (lineItemRow.querySelector('text-component'));
     textComponent?.shimmer();
