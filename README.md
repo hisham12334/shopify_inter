@@ -33,3 +33,9 @@ Shopify theme engineering submission for the XINZUO challenge.
 ## Notes
 
 Additional implementation details are included in `NOTE.md`.
+
+---
+
+## Submission Token
+
+`rk87Tbt7NX0WvZp7JFgPKv`
